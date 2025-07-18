@@ -20,6 +20,22 @@
   }
 }
 
+.open {
+  background-color: #4CAF50;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.closed {
+  background-color: #ff0023;
+
+  &:hover {
+    background-color: #dc011f;
+  }
+}
+
 .icon {
   font-size: 18px;
 }

@@ -162,7 +162,10 @@ const Header = () => {
                         </span>
                     </button>
 
-                    <button className={timeWork.hoursButton} onClick={toggleModal}>
+                    <button
+                        className={`${timeWork.hoursButton} ${isBusinessOpen() ? timeWork.open : timeWork.closed}`}
+                        onClick={toggleModal}
+                    >
                         <FiClock className={timeWork.icon} />
                         <span className={timeWork.hoursText}>
                                 {isBusinessOpen() ? 'Работаем' : 'Закрыто'}
