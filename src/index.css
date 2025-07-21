@@ -1,3 +1,5 @@
+@import 'styles/fonts.css';
+
 html {
   scroll-behavior: smooth;
 }
@@ -15,13 +17,13 @@ body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Glametrix', sans-serif;
+  font-weight: 400;
 }
 
 body {
-  background-color: #121212;
   margin: 0;
   overflow-x: hidden;
-  color: white;
 }
 
 
@@ -125,3 +127,4 @@ label {
 legend {
   display: block;
 }
+

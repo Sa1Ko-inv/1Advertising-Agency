@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import styles from './header.module.scss';
 import logo from '../../assets/лого 1ра.jpg';
 import background from '../../assets/back.jpg';
@@ -16,6 +16,8 @@ const Header = () => {
     const [navbarHeight, setNavbarHeight] = useState(0);
     const [isRevealed, setIsRevealed] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activeLink, setActiveLink] = useState(null);
+
 
     const toggleMenu = () => setIsOpen(prev => !prev);
 
@@ -37,6 +39,8 @@ const Header = () => {
 
     const scrollToSection = (id) => {
         if (isOpen) toggleMenu();
+
+        setActiveLink(id); // <-- активируем ссылку
 
         const element = document.getElementById(id);
         if (element && navbarRef.current) {
@@ -84,13 +88,13 @@ const Header = () => {
     }, []);
 
     const workingHours = [
-        { day: 'Понедельник', hours: '10:00 - 18:00' },
-        { day: 'Вторник', hours: '10:00 - 18:00' },
-        { day: 'Среда', hours: '10:00 - 18:00' },
-        { day: 'Четверг', hours: '10:00 - 18:00' },
-        { day: 'Пятница', hours: '10:00 - 18:00' },
-        { day: 'Суббота', hours: 'Выходной' },
-        { day: 'Воскресенье', hours: 'Выходной' },
+        {day: 'Понедельник', hours: '10:00 - 18:00'},
+        {day: 'Вторник', hours: '10:00 - 18:00'},
+        {day: 'Среда', hours: '10:00 - 18:00'},
+        {day: 'Четверг', hours: '10:00 - 18:00'},
+        {day: 'Пятница', hours: '10:00 - 18:00'},
+        {day: 'Суббота', hours: 'Выходной'},
+        {day: 'Воскресенье', hours: 'Выходной'},
     ];
 
     return (
@@ -107,17 +111,7 @@ const Header = () => {
                             </a>
                         </div>
 
-                        <button className={styles.burger} onClick={toggleMenu}>
-                            <span className={isOpen ? styles.open : ''}></span>
-                            <span className={isOpen ? styles.open : ''}></span>
-                            <span className={isOpen ? styles.open : ''}></span>
-                        </button>
-
-                        <div className={`${styles['navbar-menu']} ${isOpen ? styles.open : ''}`}>
-                            <a onClick={() => scrollToSection('about')}>О нас</a>
-                            <a onClick={() => scrollToSection('price')}>Каталог</a>
-                            <a onClick={() => scrollToSection('contacts')}>Контакты</a>
-
+                        <div className={styles.navbarControls}>
                             <div className={styles.themeSwitch}>
                                 <label className={styles.switch}>
                                     <input
@@ -136,7 +130,35 @@ const Header = () => {
                                     </span>
                                 </label>
                             </div>
+
+                            <button className={styles.burger} onClick={toggleMenu}>
+                                <span className={isOpen ? styles.open : ''}></span>
+                                <span className={isOpen ? styles.open : ''}></span>
+                                <span className={isOpen ? styles.open : ''}></span>
+                            </button>
                         </div>
+
+                        <div className={`${styles['navbar-menu']} ${isOpen ? styles.open : ''}`}>
+                            <a
+                                onClick={() => scrollToSection('about')}
+                                className={activeLink === 'about' ? styles.active : ''}
+                            >
+                                О нас
+                            </a>
+                            <a
+                                onClick={() => scrollToSection('price')}
+                                className={activeLink === 'price' ? styles.active : ''}
+                            >
+                                Каталог
+                            </a>
+                            <a
+                                onClick={() => scrollToSection('contacts')}
+                                className={activeLink === 'contacts' ? styles.active : ''}
+                            >
+                                Контакты
+                            </a>
+                        </div>
+
                     </nav>
                 </div>
             </div>
@@ -150,7 +172,7 @@ const Header = () => {
                     <p>Рекламное агентство полного цикла</p>
 
                     <button className={phone.phoneButton} onClick={handleClick}>
-                        <FiPhone className={phone.icon} />
+                        <FiPhone className={phone.icon}/>
                         <span className={phone.number}>
                             {fullPhone}
                             {!isRevealed && (
@@ -166,24 +188,25 @@ const Header = () => {
                         className={`${timeWork.hoursButton} ${isBusinessOpen() ? timeWork.open : timeWork.closed}`}
                         onClick={toggleModal}
                     >
-                        <FiClock className={timeWork.icon} />
+                        <FiClock className={timeWork.icon}/>
                         <span className={timeWork.hoursText}>
                                 {isBusinessOpen() ? 'Работаем' : 'Закрыто'}
                             </span>
                     </button>
                 </div>
-            {/*  Модальное окно  */}
+                {/*  Модальное окно  */}
                 {isModalOpen && (
                     <div className={timeWork.modalOverlay} onClick={toggleModal}>
                         <div className={timeWork.modalContent} onClick={(e) => e.stopPropagation()}>
                             <button className={timeWork.closeButton} onClick={toggleModal}>×</button>
                             <h2>График работы</h2>
                             <ul>
-                                {workingHours.map(({ day, hours }) => (
+                                {workingHours.map(({day, hours}) => (
                                     <li key={day} className={hours === 'Выходной' ? timeWork.weekend : ''}>
                                             <span className={timeWork.day}>
                                                 {day}
-                                                {day === getCurrentDay() && <span className={timeWork.today}> (Сегодня)</span>}
+                                                {day === getCurrentDay() &&
+                                                    <span className={timeWork.today}> (Сегодня)</span>}
                                             </span>
                                         <span className={timeWork.hours}>{hours}</span>
                                     </li>

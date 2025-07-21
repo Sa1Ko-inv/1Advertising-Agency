@@ -1,0 +1,226 @@
+:root[data-theme='light'] {
+  --card-bg: #ffffff;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --section-bg: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  --line-color: #6b7280;
+  --title-color: #1f2937;
+  --list-text-color: #4b5563;
+  --accent-color: #dc5322;
+}
+
+:root[data-theme='dark'] {
+  --card-bg: #1f2937;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --section-bg: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+  --line-color: #9ca3af;
+  --title-color: #f3f4f6;
+  --list-text-color: #d1d5db;
+  --accent-color: #dc5322;
+}
+
+.about {
+  position: relative;
+  padding: 80px 0;
+  background: var(--section-bg);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease, background 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--line-color), transparent);
+  }
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.about-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--title-color);
+  margin-bottom: 3rem;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 180px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    margin: 1rem auto 0;
+  }
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+  & > :last-child:nth-child(4) {
+    grid-column: 2 / 3;
+  }
+}
+
+.service-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+
+.service-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--title-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.service-list {
+  list-style: none;
+  padding: 0;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: var(--list-text-color);
+
+  li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+      font-size: 1.2rem;
+    }
+
+    li {
+      padding-left: 2rem;
+
+      &::before {
+        content: '◦';
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+
+/* Large screens (≥1921px) */
+@media (min-width: 1921px) {
+  .about-title {
+    font-size: 3rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+
+  .service-card {
+    padding: 2.5rem;
+  }
+}
+
+/* Tablets (768px–1024px) */
+@media (max-width: 1024px) {
+  .about-title {
+    font-size: 2rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+
+    & > :last-child:nth-child(3) {
+      grid-column: span 2;
+      justify-self: center;
+    }
+  }
+
+  .service-card {
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile (481px–768px) */
+@media (max-width: 768px) {
+  .about {
+    padding: 60px 0;
+  }
+
+  .about-title {
+    font-size: 1.75rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+
+    & > :last-child:nth-child(4) {
+      grid-column: auto;
+    }
+  }
+
+  .service-card {
+    padding: 1.25rem;
+  }
+}
+
+/* Very small screens (≤480px) */
+@media (max-width: 480px) {
+  .about {
+    padding: 40px 0;
+  }
+
+    .container {
+        padding: 0 10px;
+    }
+
+  .about-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .service-card {
+    padding: 1rem;
+  }
+
+  .service-card-title {
+    font-size: 1.75rem;
+  }
+
+  .service-list {
+    font-size: 1.25rem;
+  }
+}
