@@ -1,6 +1,7 @@
 import './App.css'
 import Header from "./section/Header/Header.jsx";
 import About from "./section/About/About.jsx";
+import Catalog from "./section/Catalog/Catalog.jsx";
 
 function App() {
 
@@ -8,10 +9,13 @@ function App() {
     return (
         <>
             <section id="header">
-                <Header />
+                <Header/>
             </section>
             <section id="about">
-                <About />
+                <About/>
+            </section>
+            <section id="catalog">
+                <Catalog/>
             </section>
         </>
     )
